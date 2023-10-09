@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
   type Student {
     _id: ID
-    sid: Int!
+    sid: String!
     firstName: String!
     lastName: String!
     middleName: String
@@ -13,9 +13,14 @@ const typeDefs = gql`
     loans: [Loan]
   }
 
-  type Category {
+  type Staff {
     _id: ID
-    name: String
+    firstName: String!
+    lastName: String!
+    middleName: String
+    email: String!
+    students: [Student]
+    schools: [School]
   }
 
   type Tool {
@@ -31,13 +36,21 @@ const typeDefs = gql`
     categories: [Category]!
   }
 
+  type Category {
+    _id: ID
+    name: String!
+  }
+
   type Loan {
     _id: ID
     status: String!
     tools: [Tool!]
     student: Student!
-    staff: [Staff]!
+    staff: [Staff]
   }
+
+
+
 
   type Checkout {
     session: ID
@@ -45,10 +58,10 @@ const typeDefs = gql`
 
   type Auth {
     token: ID
-    user: User
+    staff: Staff
   }
 
-  input ProductInput {
+  input ToolInput {
     _id: ID
     purchaseQuantity: Int
     name: String

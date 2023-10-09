@@ -25,34 +25,28 @@ const userSchema = new Schema({
         required: true,
         trim: true
     },
+    middleName: {
+        type: String,
+        trim: true
+    },
+    nickName: {
+        type: String,
+        trim: true
+    },
     email: {
         type: String,
         required: true,
         unique: true
     },
-    password: {
-        type: String,
-        required: true,
-        minlength: 5
+    staff: [Staff.schema],
+    school: {
+        type: Schema.Types.ObjectId,
+        ref: "School",
+        required: true
     },
-    orders: [Order.schema]
+    loans: [Loan.schema]
 });
 
-// set up pre-save middleware to create password
-userSchema.pre('save', async function (next) {
-    if (this.isNew || this.isModified('password')) {
-        const saltRounds = 10;
-        this.password = await bcrypt.hash(this.password, saltRounds);
-    }
+const Student = mongoose.model('Student', studentSchema);
 
-    next();
-});
-
-// compare the incoming password with the hashed password
-userSchema.methods.isCorrectPassword = async function (password) {
-    return await bcrypt.compare(password, this.password);
-};
-
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+module.exports = Student;
