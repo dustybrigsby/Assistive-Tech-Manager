@@ -5,10 +5,21 @@ const Student = require("./Student");
 const { Schema } = mongoose;
 
 const loanSchema = new Schema({
+    tool: Tool,
     student: Student,
-    tool: Tool
+    staff: Staff,
+    startDate: {
+        type: Date,
+        default: Date.now
+    },
+    dueDate: {
+        type: Date,
+    },
+    endDate: {
+        type: Date,
+    },
 });
 
-const Tool = mongoose.model("Tool", loanSchema);
+const Loan = mongoose.model("Loan", loanSchema);
 
-module.exports = Tool;
+module.exports = Loan;

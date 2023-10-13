@@ -9,6 +9,7 @@ const typeDefs = gql`
     middleName: String
     nickName: String
     email: String!
+    school: School
     team: [Staff]!
     loans: [Loan]
   }
@@ -48,6 +49,9 @@ const typeDefs = gql`
     tools: [Tool!]
     student: Student!
     staff: [Staff]
+    checkoutDate: Date
+    dueDate: Date
+    checkinDate: Date
   }
 
   type School {
@@ -56,18 +60,6 @@ const typeDefs = gql`
     students: [Student]
     staff: [Staff]
   }
-
-  type Loan {
-    _id: ID
-    student: Student!
-    tool: Tool!
-    checkoutDate: Date
-    dueDate: Date
-    checkinDate: Date
-  }
-
-
-
 
   type Checkout {
     session: ID
@@ -88,18 +80,11 @@ const typeDefs = gql`
   }
 
   type Query {
-    categories: [Category]
-    tools(category: ID, name: String): [Tool]
-    tool(_id: ID!): Tool
-    staff: Staff
+    students: [Student]
   }
 
   type Mutation {
-    addStaff(firstName: String!, lastName: String!, middleName: String, email: String!, password: String!): Auth
-    addStudent(sid: String!, firstName: String!, lastName: String!, middleName: String, nickName: String, email: String!, school: ): Auth
-    addOrder(products: [ID]!): Order
-    updateUser(firstName: String, lastName: String, email: String, password: String): User
-    updateProduct(_id: ID!, quantity: Int!): Product
+    addStudent(sid: String!, firstName: String!, lastName: String!, middleName: String, nickName: String, email: String!, school: String!, team:[Staff], loans: [Loan] ): Auth
     login(email: String!, password: String!): Auth
   }
 `;
