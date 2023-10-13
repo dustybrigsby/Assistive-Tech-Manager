@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const Category = require("./Category");
 
 const { Schema } = mongoose;
 
@@ -44,13 +45,9 @@ const toolSchema = new Schema({
         required: true,
         default: 1
     },
-    category: {
-        type: Schema.Types.ObjectId,
-        ref: 'Category',
-        required: true
-    }
+    category: [Category]
 });
 
-const Tool = mongoose.model('Tool', toolSchema);
+const Tool = mongoose.model("Tool", toolSchema);
 
 module.exports = Tool;

@@ -34,6 +34,7 @@ const typeDefs = gql`
     quantity: Int!
     available: Int!
     categories: [Category]!
+    tickets: [String]
   }
 
   type Category {
@@ -47,6 +48,22 @@ const typeDefs = gql`
     tools: [Tool!]
     student: Student!
     staff: [Staff]
+  }
+
+  type School {
+    _id: ID
+    name: String!
+    students: [Student]
+    staff: [Staff]
+  }
+
+  type Loan {
+    _id: ID
+    student: Student!
+    tool: Tool!
+    checkoutDate: Date
+    dueDate: Date
+    checkinDate: Date
   }
 
 
@@ -72,15 +89,14 @@ const typeDefs = gql`
 
   type Query {
     categories: [Category]
-    products(category: ID, name: String): [Product]
-    product(_id: ID!): Product
-    user: User
-    order(_id: ID!): Order
-    checkout(products: [ProductInput]): Checkout
+    tools(category: ID, name: String): [Tool]
+    tool(_id: ID!): Tool
+    staff: Staff
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
+    addStaff(firstName: String!, lastName: String!, middleName: String, email: String!, password: String!): Auth
+    addStudent(sid: String!, firstName: String!, lastName: String!, middleName: String, nickName: String, email: String!, school: ): Auth
     addOrder(products: [ID]!): Order
     updateUser(firstName: String, lastName: String, email: String, password: String): User
     updateProduct(_id: ID!, quantity: Int!): Product

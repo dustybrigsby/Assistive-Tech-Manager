@@ -38,7 +38,7 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    staff: [Staff.schema],
+    team: [Staff.schema],
     school: {
         type: Schema.Types.ObjectId,
         ref: "School",
